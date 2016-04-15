@@ -54,11 +54,11 @@ exit /b
 
 	set cdir=%cd%
 
+	call %PROJ_DIR%\scripts\deps.bat check_luajit %flavor%
 	rem call %PROJ_DIR%\scripts\deps.bat check_geolib %flavor%
 	rem call %PROJ_DIR%\scripts\deps.bat check_boost %flavor%
 	rem call %PROJ_DIR%\scripts\deps.bat check_dxsdk %flavor%
 	rem call %PROJ_DIR%\scripts\deps.bat check_fusion %flavor%
-	rem call %PROJ_DIR%\scripts\deps.bat check_luajit %flavor%
 	rem call %PROJ_DIR%\scripts\deps.bat check_cef %flavor%
 
 	cd /d "%cdir%"

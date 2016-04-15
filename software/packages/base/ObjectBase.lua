@@ -41,7 +41,7 @@ function Object:check(cond,msg,...)
 	if not cond then
 		msg = msg or "Invalid value detected."
 		self:showError(msg,...)
-		-- self:backtrace()
+		self:backtrace()
 		error("Stopping because an assertion error occured.")
 	end
 	

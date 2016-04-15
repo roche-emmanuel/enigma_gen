@@ -1,6 +1,6 @@
 local cfg = {}
 
-cfg.input_file = "launcher.exe"
+cfg.input_file = "enigmagen.exe"
 cfg.output_file = "../apps/enigmagen.exe"
 
 cfg.share_virtual_system = true
@@ -8,8 +8,7 @@ cfg.map_exec_temp_file = true
 cfg.allow_running_virtual_exec = true
 
 cfg.delete_extracted_on_exit = true
--- Note that the launcher doesn't work anymore if we enable compression here.
-cfg.compress_files = false 
+cfg.compress_files = true 
 
 cfg.packaging_enabled = false
 cfg.packages = {
@@ -24,7 +23,6 @@ local addFile = function(pattern,recursive)
 	table.insert(cfg.files,{root_path=root_folder, pattern=pattern, recursive=recursive})
 end
 
-addFile("luajit.exe")
 addFile("lua51.dll")
 addFile("run_app.lua")
 addFile("externals/*.lua",true)
