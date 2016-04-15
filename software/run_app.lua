@@ -2,20 +2,20 @@ local args = {...}
 
 local appName = "enigma.generator" 
 
-print('Running app file '.. appName)
--- 
+-- print('Running app file '.. appName)
+
 -- Retrieve the local path to be able to load vstruct:
 local scriptFile = debug.getinfo(1).short_src
 print("Scritpfile: ",scriptFile)
 
-print("Getting path...")
+-- print("Getting path...")
 getPath=function(str,sep)
     sep=sep or'\\'
     return str:match("(.*"..sep..")")
 end
 
--- local path = getPath(scriptFile)
--- print("Using path: ",path)
+local path = getPath(scriptFile)
+print("Using path: ",path)
 local path=""
 
 print("OS: ", jit.os)
@@ -29,7 +29,7 @@ else
 end
 
 root_path = path
-print("Root path: ", root_path)
+-- print("Root path: ", root_path)
 
 package.path = path.."packages/?.lua;"..path.."externals/?.lua;"..package.path
 package.cpath = path.."modules/"..flavor.."/?.dll;".. path.."modules/"..flavor.."/?51.dll;" ..package.cpath
@@ -45,6 +45,8 @@ trace = require("logging.DefaultTracer")()
 print "Loading class builder..."
 io.flush()
 createClass = require("base.ClassBuilder")()
+
+-- log:debug("Arguments: ", args)
 
 print "Running app..."
 io.flush()

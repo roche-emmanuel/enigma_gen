@@ -38,8 +38,11 @@ function Class:initialize(options)
 	self:check(options and options[1],"Invalid argument list for enigma generator")
 	self._params[1] = options[1]
 
+	self:check(options and options[2],"Invalid project path")
+	self._projectPath = options[2]
+
 	-- we need to generate a temporary file except if the target description file name is specified.
-	self._evbfile = options[2] or path.tmpName().."evb"
+	self._evbfile = options[3] or path.tmpName().."evb"
 	self:debug("Target EVB file: ",self._evbfile)
 end
 
@@ -239,7 +242,7 @@ function Class:writeFileElement(elem)
 		-- this is a regular file:
 		self:writeTag("Type",2)
 		self:writeTag("Name",elem.name)
-		self:writeTag("File",elem.file)
+		self:writeTag("File",path.absPath(elem.file,self._projectPath))
 		self:writeTag("ActiveX",false)
 		self:writeTag("ActiveXInstall",false)
 		self:writeTag("Action",0)
@@ -264,8 +267,8 @@ function Class:generateEVB()
 	self:openTag("")
 
 	-- write the input file:
-	self:writeTag("InputFile",self._desc.input_file)
-	self:writeTag("OutputFile",self._desc.output_file)
+	self:writeTag("InputFile",path.absPath(self._desc.input_file,self._projectPath))
+	self:writeTag("OutputFile",path.absPath(self._desc.output_file,self._projectPath))
 
 	self:openTag("Files")
 	self:writeTag("Enabled",true)
@@ -302,7 +305,7 @@ Function called to perform the actual package generation with enigmavbconsole.
 ]]
 function Class:generatePackages()
 	self:debug("Generating package...")
-	local cmd = root_path.. "\\tools\\enigmavbconsole.exe "..self._evbfile
+	local cmd = "tools\\enigmavbconsole.exe "..self._evbfile
 
 	self:debug("Executing command: ",cmd)
 	local f = io.popen(cmd,"r")
