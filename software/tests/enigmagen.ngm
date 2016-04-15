@@ -7,6 +7,9 @@ cfg.share_virtual_system = true
 cfg.map_exec_temp_file = true
 cfg.allow_running_virtual_exec = true
 
+cfg.delete_extracted_on_exit = true
+cfg.compress_files = true
+
 cfg.packaging_enabled = true
 cfg.packages = {
 	"%DEFAULT FOLDER%\\*.sgpack"

@@ -6,7 +6,7 @@ local appName = "enigma.generator"
 
 -- Retrieve the local path to be able to load vstruct:
 local scriptFile = debug.getinfo(1).short_src
-print("Scritpfile: ",scriptFile)
+-- print("Scritpfile: ",scriptFile)
 
 -- print("Getting path...")
 getPath=function(str,sep)
@@ -15,7 +15,7 @@ getPath=function(str,sep)
 end
 
 local path = getPath(scriptFile)
-print("Using path: ",path)
+-- print("Using path: ",path)
 local path=""
 
 print("OS: ", jit.os)
