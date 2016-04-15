@@ -34,10 +34,10 @@ std::string getExecutablePath()
 }
 
 int main(int argc, char *argv[]) {
-	DEBUG_MSG("Hello world!");
+	// DEBUG_MSG("Hello world!");
 
   std::string path = getExecutablePath();
-  DEBUG_MSG("Executable path: "<<path)
+  // DEBUG_MSG("Executable path: "<<path)
 
   lua_State* state = luaL_newstate();
   DEBUG_MSG("Lua state opened.")

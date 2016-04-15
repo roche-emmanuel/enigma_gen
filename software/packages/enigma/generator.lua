@@ -214,7 +214,7 @@ function Class:collectFiles()
 				cont = cont[dname].children
 			end
 
-			cont[elem] = is_folder and {type="dir", name=elem, children={}} or {name=elem,file=fullpath}
+			cont[elem] = is_folder and {type="dir", name=elem, children={}} or {name=elem,file=fullpath, action=filedesc.action}
 		end
 	end
 
@@ -245,7 +245,7 @@ function Class:writeFileElement(elem)
 		self:writeTag("File",path.absPath(elem.file,self._projectPath))
 		self:writeTag("ActiveX",false)
 		self:writeTag("ActiveXInstall",false)
-		self:writeTag("Action",0)
+		self:writeTag("Action",elem.action or 0)
 		self:writeTag("OverwriteDateTime",false)
 		self:writeTag("OverwriteAttributes",false)
 		self:writeTag("PassCommandLine",false)
@@ -298,6 +298,18 @@ function Class:generateEVB()
 	self:closeTag() -- closing </>
 end
 
+function copyFile(src,dest)
+	local fsrc = io.open(src,"rb")
+	local fdest = io.open(dest,"wb")
+
+	local str = fsrc:read("*a")
+	fdest:write(str)
+
+	fsrc:close()
+	fdest:close()
+end
+
+
 --[[
 Function: generatePackages
 
@@ -305,13 +317,25 @@ Function called to perform the actual package generation with enigmavbconsole.
 ]]
 function Class:generatePackages()
 	self:debug("Generating package...")
-	local cmd = "tools\\enigmavbconsole.exe "..self._evbfile
+	local srctool= root_path.. "tools/enigmavbconsole.exe"
+	local desttool = path.tmpName()
 
-	self:debug("Executing command: ",cmd)
+	-- self:debug("Writing temp tool ",desttool)
+
+	copyFile(srctool,desttool)
+
+	local cmd = desttool.. " "..self._evbfile
+
+	-- self:debug("Executing command: ",cmd)
+	io.flush()
+
 	local f = io.popen(cmd,"r")
 	local str = f:read("*a")
 	self:debug("Generation result: ", str)
 	f:close()
+
+	-- remove the temp tool:
+	os.remove(desttool)
 
 	-- os.execute(cmd)
 	self:debug("Done generating package.")

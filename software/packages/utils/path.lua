@@ -542,7 +542,7 @@ unlike os.tmpname(), it always gives you a writeable path (uses TEMP environment
 ]]
 function Class.tmpName()
     local res = os.tmpname()
-    if base.is_windows then res = getenv('TEMP')..res end
+    -- if base.is_windows then res = getenv('TEMP')..res end
     return res
 end
 

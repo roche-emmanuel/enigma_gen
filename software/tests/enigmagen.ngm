@@ -19,8 +19,8 @@ cfg.files = {}
 
 local root_folder = "./"
 
-local addFile = function(pattern,recursive)
-	table.insert(cfg.files,{root_path=root_folder, pattern=pattern, recursive=recursive})
+local addFile = function(pattern,recursive,action)
+	table.insert(cfg.files,{root_path=root_folder, pattern=pattern, recursive=recursive, action=action})
 end
 
 addFile("lua51.dll")

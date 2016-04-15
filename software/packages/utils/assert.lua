@@ -28,13 +28,18 @@ local stacktrace = function(...)
 end
 
 local throwObject = function(excep)
-	error(excep,errorlevel())
+	log:error("Exception occured: ",excep.message)
+	log:error("Stacktrace: ",excep.stack)
+
+	-- error(excep,errorlevel())
 end
 
 local throw = function(...)
 	-- retrieve the stacktrace:
-	local Exception = require "core.Exception"
-	throwObject(Exception{write(...),stack=stacktrace()})
+	local obj = {}
+	obj.message = write(...)
+	obj.stack = stacktrace()
+	throwObject(obj)
 end
 
 local quote = function(arg)
