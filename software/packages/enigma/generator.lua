@@ -1,7 +1,7 @@
 local Class = createClass{name="EnigmaGenerator",bases={"base.Object"}};
 
--- local path =require 'utils.path'
--- local dir =require 'utils.dir'
+local path =require 'utils.path'
+local dir =require 'utils.dir'
 
 --[[
 Class: enigma.EnigmaGenerator
@@ -34,25 +34,22 @@ Parameters:
 function EnigmaGenerator(options)
 ]=]
 function Class:initialize(options)
-	-- Function body
+	self._params = {}
+	self:check(options and options[1],"Invalid argument list for enigma generator")
+	self._params[1] = options[1]
+
+	-- we need to generate a temporary file except if the target description file name is specified.
+	self._evbfile = options[2] or path.tmpName().."evb"
+	self:debug("Target EVB file: ",self._evbfile)
 end
 
 --[[
 Function: run
 
-Run method
+Main run function for this generator.
 ]]
 function Class:run()
-	self:debug("Running the enigma app!")
-end
-
---[[
-Function: execute
-
-Re-implementation of <loaders.LoaderBase.execute>.
-]]
-function Class:execute()
-	self:debug("Entering enigma mode...")
+	self:debug("Running enigma generator...")
 	--  Here we should have receive a parameter, and this parameter should be considered as a file to execute to perform 
 	-- the binding generation process:
 	self:check(#self._params==1,"Should receive 1 parameter for enigma mode: params=",self._params)
@@ -63,11 +60,6 @@ function Class:execute()
 	
 	-- self:debug("Received description: ",desc)
 	self._desc = desc
-
-	-- we need to generate a temporary file except if the target description file name is specified.
-	self._evbfile = self._flags.evbfile or path.tmpName().."evb"
-
-	self:debug("Generating EVB file: ", self._evbfile)
 
 	-- prepare a global buffer to store all the evb content:
 	self._buf = {}
@@ -198,7 +190,7 @@ function Class:collectFiles()
 		
 		-- self:debug("Found ",list:size()," elements with pattern=",pat)
 
-		for _,fullpath in list:sequence() do
+		for _,fullpath in ipairs(list) do
 			local is_folder = path.isDir(fullpath)
 
 			-- elem = path.relPath(fullpath,root_path)
@@ -289,7 +281,7 @@ function Class:generateEVB()
 
 	self:openTag("Packaging")
 	self:writeTag("Enabled",self._desc.packaging_enabled or false)
-	for _,str in ipairs(self._desc.packages) do
+	for _,str in ipairs(self._desc.packages or {}) do
 		self:writeTag("Package",str)
 	end
 	self:closeTag() -- closing </Packaging>

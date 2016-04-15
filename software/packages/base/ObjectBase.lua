@@ -39,10 +39,10 @@ end
 
 function Object:check(cond,msg,...)
 	if not cond then
-		trace:error(self,msg or "Invalid value detected.",...)
+		msg = msg or "Invalid value detected."
 		self:showError(msg,...)
-		self:backtrace()
-		-- error("Stopping because an assertion error occured.")
+		-- self:backtrace()
+		error("Stopping because an assertion error occured.")
 	end
 	
 	return cond
@@ -50,7 +50,7 @@ end
 
 function Object:check_default(cond,defval,msg,...)
 	if not cond then
-		msg = trace:write(msg or "Invalid value detected.",...)
+		msg = log:write(msg or "Invalid value detected.",...)
 		self:showMessage(msg)
 		return defval
 	end
@@ -63,17 +63,15 @@ function Object:checkBool(cond,msg,...)
 end
 
 function Object:showError(msg,...)
-	msg = trace:write(msg,...)
-	core.showMessageBox(msg,"Assertion error in " .. self._TRACE_)
+	log:fatal(msg,...)
 end
 
 function Object:showMessage(msg,...)
-	msg = trace:write(msg,...)
-	core.showMessageBox(msg,self._TRACE_)
+	log:info(msg,...)
 end
 
 function Object:throw(msg,...)
-	trace:error(msg,...)
+	log:error(msg,...)
 	self:backtrace()
 	error("Stopping because error occured: '"..msg.."'\n at: ".. debug.traceback())
 end

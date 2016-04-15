@@ -12,12 +12,12 @@ function DefaultLogger:__init()
 end
 
 local performLog = function(self,level,...)
-	print(self:write(self:levelString(level)," ",...))
+	print(self:write("[",self:levelString(level),"] ",...))
 end
 
 local performLogV = function(self,level,...)
 	if self.verbose then
-		print(self:write(self:levelString(level)," ",...))	
+		print(self:write("[",self:levelString(level),"] ",...))	
 	end
 end
 

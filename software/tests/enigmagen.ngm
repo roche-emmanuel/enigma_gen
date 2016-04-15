@@ -1,0 +1,31 @@
+local cfg = {}
+
+cfg.input_file = "luajit.exe"
+cfg.output_file = "../apps/enigmagen.exe"
+
+-- cfg.share_virtual_system = true
+-- cfg.map_exec_temp_file = true
+-- cfg.allow_running_virtual_exec = true
+
+-- cfg.packaging_enabled = true
+-- cfg.packages = {
+-- 	"%DEFAULT FOLDER%\\*.sgpack"
+-- }
+
+cfg.files = {}
+
+local root_folder = "./"
+
+local addFile = function(pattern,recursive)
+	table.insert(cfg.files,{root_path=root_folder, pattern=pattern, recursive=recursive})
+end
+
+addFile("lua51.dll")
+addFile("externals/*.lua",true)
+addFile("packages/*.lua",true)
+addFile("modules/*.dll",true)
+
+-- add the enigma components:
+-- addFile("tools/enigmavbconsole.exe")
+
+return cfg

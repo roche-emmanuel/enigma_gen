@@ -12,12 +12,12 @@ function DefaultTracer:__init()
 end
 
 local performLog = function(self,level,trace,...)
-	print(self:write(self:levelString(level),(trace and trace ~= "") and " <"..trace..">" or ""," ",...))
+	print(self:write("[",self:levelString(level),"]",(trace and trace ~= "") and " <"..trace..">" or ""," ",...))
 end
 
 local performLogV = function(self,level,trace,...)
 	if self.verbose then
-		print(self:write(self:levelString(level),(trace and trace ~= "") and " <"..trace..">" or ""," ",...))
+		print(self:write("[",self:levelString(level),"]",(trace and trace ~= "") and " <"..trace..">" or ""," ",...))
 	end
 end
 

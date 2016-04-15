@@ -31,8 +31,8 @@ end
 root_path = path
 print("Root path: ", root_path)
 
-package.path = path.."modules/?.lua;"..path.."externals/?.lua;"..package.path
-package.cpath = path.."bin/"..flavor.."/modules/?.dll;".. path.."bin/"..flavor.."/modules/?51.dll;" ..package.cpath
+package.path = path.."packages/?.lua;"..path.."externals/?.lua;"..package.path
+package.cpath = path.."modules/"..flavor.."/?.dll;".. path.."modules/"..flavor.."/?51.dll;" ..package.cpath
 
 -----------------------------------------------------------------------------------
 -- Entry point of the application:
