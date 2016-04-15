@@ -1,3 +1,5 @@
 # ignore generated evb files:
 software/*.evb
 
+# ignore build folder:
+build/

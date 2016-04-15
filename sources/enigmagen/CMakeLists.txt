@@ -1,5 +1,5 @@
 SET(TARGET_NAME "enigmagen")
-SET(TARGET_DIR "./")
+SET(TARGET_DIR "../../")
 
 INCLUDE_DIRECTORIES (../include)
 
