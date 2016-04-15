@@ -8,9 +8,10 @@ cfg.map_exec_temp_file = true
 cfg.allow_running_virtual_exec = true
 
 cfg.delete_extracted_on_exit = true
-cfg.compress_files = true
+-- Note that the launcher doesn't work anymore if we enable compression here.
+cfg.compress_files = false 
 
-cfg.packaging_enabled = true
+cfg.packaging_enabled = false
 cfg.packages = {
 	"%DEFAULT FOLDER%\\*.sgpack"
 }
@@ -25,6 +26,7 @@ end
 
 addFile("luajit.exe")
 addFile("lua51.dll")
+addFile("run_app.lua")
 addFile("externals/*.lua",true)
 addFile("packages/*.lua",true)
 addFile("modules/*.dll",true)

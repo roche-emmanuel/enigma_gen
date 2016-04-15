@@ -1,1 +1,1 @@
-luajit.exe run_app.lua %1 %2 %3
+luajit.exe ./run_app.lua %1 %2 %3
